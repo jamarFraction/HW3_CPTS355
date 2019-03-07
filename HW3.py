@@ -236,10 +236,49 @@ def testsearchDicts2():
     
     return True
 
+def subsets(L):
+
+    n = len(L)
+    outputList = []
+
+    # bitwise and-ing approach
+    for i in range(0,(1<<n)):
+        subset = []
+
+        for j in range(0,n):
+
+            if ((i & (1 << j)) > 0):
+
+                subset.append(L[j])
+
+        # append the new subset to the running list
+        outputList.append(subset)
+    
+    # sort based on the object length
+    outputList.sort(key=len)
+    
+    return outputList
+
+
+def testsubsets():
+
+    testInput1 = [1,2,3]
+    testInput2 = [(1,"one"),(2,"two")]
+    testInput3 = []
+    
+    if subsets(testInput1) != [[],[1],[2],[3],[1,2],[1,3],[2,3],[1,2,3]]:
+        return False
+    if subsets(testInput2) != [[],[(1,"one")],[(2,"two")],[(1,"one"),(2,"two")]]:
+        return False
+    if subsets(testInput3) != [[]]:
+        return False
+
+    return True
+
 
 testFunctions = {"busStops": testbusStops, "addDict": testaddDict,
                 "addDictN": testaddDictN, "searchDicts": testsearchDicts,
-                "searchDicts2": testsearchDicts2}
+                "searchDicts2": testsearchDicts2, "subsets":testsubsets}
 
 # MAIN, not gucci
 if __name__ == '__main__':
