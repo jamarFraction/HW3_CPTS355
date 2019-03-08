@@ -205,6 +205,7 @@ def searchDicts2(L,k):
 
 def testsearchDicts2(): 
 
+    # Test Input
     testInput1 = [(0, {"x": 0, "y": True, "z": "zero"}),
                   (0, {"x": 1}),
                   (1, {"y": False}),
@@ -219,6 +220,7 @@ def testsearchDicts2():
                   (3, {"x": 3, "p": "three"}),
                   (2, {"x": 3})]
 
+    # Run Tests
     if searchDicts2(testInput1, "x") != 1:
         return False
     if searchDicts2(testInput1, "y") != False:
@@ -234,6 +236,7 @@ def testsearchDicts2():
     if searchDicts2(testInput2, "y") != 77:
         return False
     
+    # all tests passed!
     return True
 
 def subsets(L):
@@ -259,7 +262,6 @@ def subsets(L):
     
     return outputList
 
-
 def testsubsets():
 
     testInput1 = [1,2,3]
@@ -275,10 +277,60 @@ def testsubsets():
 
     return True
 
+def pathsHelper(curLocation, gridSize):
+
+    totalPaths = 0
+
+    # if moving down or right from current postition will result in reaching the goal, 
+    # return 1 to indicate a newly found path
+    if ((curLocation[0] + 1, curLocation[1]) == gridSize):
+        return 1
+    elif ((curLocation[0], curLocation[1] + 1) == gridSize):
+        return 1
+
+    # move down
+    if curLocation[0] < gridSize[0]:
+
+        newLocation = (curLocation[0] + 1, curLocation[1])
+        totalPaths += pathsHelper(newLocation, gridSize)
+    
+    # move right
+    if curLocation[1] < gridSize[1]:
+
+        newLocation = (curLocation[0], curLocation[1] + 1)
+        totalPaths += pathsHelper(newLocation, gridSize)
+    
+    return totalPaths
+    
+def numPaths(m,n):
+
+    # solution NOT zero-based, starting point is @ location 1,1
+    uniquPathsCount = pathsHelper((1,1), (m,n))
+
+    return uniquPathsCount
+
+
+def testnumPaths():
+
+    # Run Tests
+    if numPaths(9,12) != 75582:
+        return False
+    if numPaths(16,4) != 816:
+        return False
+    if numPaths(3,20) != 210:
+        return False
+    if numPaths(9,13) != 125970:
+        return False
+    
+    # all tests passed!
+    return True
+    
+
 
 testFunctions = {"busStops": testbusStops, "addDict": testaddDict,
                 "addDictN": testaddDictN, "searchDicts": testsearchDicts,
-                "searchDicts2": testsearchDicts2, "subsets":testsubsets}
+                "searchDicts2": testsearchDicts2, "subsets":testsubsets,
+                "numPaths": testnumPaths}
 
 # MAIN, not gucci
 if __name__ == '__main__':
