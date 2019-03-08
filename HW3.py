@@ -1,5 +1,6 @@
 # importing functools for reduce() 
 import functools as functools
+import sys as sys
 
 def busStops(b):
 
@@ -308,8 +309,7 @@ def numPaths(m,n):
     uniquPathsCount = pathsHelper((1,1), (m,n))
 
     return uniquPathsCount
-
-
+    
 def testnumPaths():
 
     # Run Tests
@@ -324,13 +324,69 @@ def testnumPaths():
     
     # all tests passed!
     return True
+
+def numbersToSum(iNumbers,sum):
     
+    runningSum = 0
+    output = []
+
+    # test the sum with with what would be the next prime in the iterator
+    while runningSum + iNumbers.current < sum:
+    
+        runningSum += iNumbers.current
+        output.append(iNumbers.__next__())      
+
+    return output      
+
+
+def testnumbersToSum():
+
+    primes1 = iterPrimes()
+    primes2 = iterPrimes()
+
+    if numbersToSum(primes1, 58) != [2, 3, 5, 7, 11, 13]:
+        return False
+    if numbersToSum(primes1, 100) != [17, 19, 23, 29]:
+        return False
+
+    if numbersToSum(primes2, 2) != []:
+        return False
+    if numbersToSum(primes2, 100) != [2, 3, 5, 7, 11, 13, 17, 19]:
+        return False
+
+    return True
 
 
 testFunctions = {"busStops": testbusStops, "addDict": testaddDict,
                 "addDictN": testaddDictN, "searchDicts": testsearchDicts,
                 "searchDicts2": testsearchDicts2, "subsets":testsubsets,
-                "numPaths": testnumPaths}
+                "numPaths": testnumPaths, "numbersToSum":testnumbersToSum}
+
+class iterPrimes():
+
+    def __init__(self): 
+        self.current = 2
+
+    def __next__(self): 
+        result = self.current
+        self.gnp()
+        return result
+
+    def __iter__(self):
+        return self
+
+    def gnp(self):
+
+        # generate next prime and assign it to self.current when found
+        for x in range(self.current + 1, sys.maxsize):
+
+            for y in range(2, x):
+                if x % y == 0:
+                    break
+
+            else:
+                self.current = x
+                break
 
 # MAIN, not gucci
 if __name__ == '__main__':
@@ -338,4 +394,3 @@ if __name__ == '__main__':
     for testName, testFunc in testFunctions.items():
         print(testName, ': ', testFunc())
         print('---------------------')
-    
