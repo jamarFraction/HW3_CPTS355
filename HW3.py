@@ -1,3 +1,7 @@
+# Jamar Fraction
+# CPTS355
+# HW3
+
 # importing functools for reduce() 
 import functools as functools
 import sys as sys
@@ -309,7 +313,7 @@ def numPaths(m,n):
     uniquPathsCount = pathsHelper((1,1), (m,n))
 
     return uniquPathsCount
-    
+
 def testnumPaths():
 
     # Run Tests
@@ -337,7 +341,6 @@ def numbersToSum(iNumbers,sum):
         output.append(iNumbers.__next__())      
 
     return output      
-
 
 def testnumbersToSum():
 
